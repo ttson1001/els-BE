@@ -36,7 +36,7 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         if (authenticate.isAuthenticated()) {
             User userAuthenticated = userServices.findByEmail(authenticate.getName());
             String token = Jwts.builder().setSubject(authenticate.getName())
-                    .claim(("authorities"), authenticate.getAuthorities()).claim("id", userAuthenticated.getId())
+                    .claim(("authorities"), authenticate.getAuthorities()).claim("id", userAuthenticated.getId()).claim("role" ,userAuthenticated.getRole())
                     .setIssuedAt((new Date())).setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
                     .signWith(jwtConfig.secretKey()).compact();
 
