@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.security.PermitAll;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1.0/auth")
@@ -21,6 +23,7 @@ public class AuthenticateController {
     private final AuthenticateService authenticateService;
 
     @PostMapping("/login")
+    @PermitAll
     private ResponseEntity<ResponseDTO> login(@RequestBody LoginDTO loginDTO){
         ResponseDTO responseDTO = new ResponseDTO();
         try {
