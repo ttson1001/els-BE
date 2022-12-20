@@ -36,13 +36,12 @@ public class AuthenticateServiceImpl implements AuthenticateService {
         if (authenticate.isAuthenticated()) {
             User userAuthenticated = userServices.findByEmail(authenticate.getName());
             String token = Jwts.builder().setSubject(authenticate.getName())
-                    .claim(("authorities"), authenticate.getAuthorities()).claim("id", userAuthenticated.getId()).claim("role" ,userAuthenticated.getRole())
+                    .claim(("authorities"), authenticate.getAuthorities()).claim("id", userAuthenticated.getId()).claim("role" ,userAuthenticated.getRole().getName())
                     .setIssuedAt((new Date())).setExpiration(java.sql.Date.valueOf(LocalDate.now().plusDays(1)))
                     .signWith(jwtConfig.secretKey()).compact();
 
             loginResponseDTO = LoginResponseDTO.builder()
                     .email(userAuthenticated.getEmail())
-                    .role(userAuthenticated.getRole().getName())
                     .token(jwtConfig.getTokenPrefix() + token).build();
         } else throw new RuntimeException("AUTHENTICATE_FAIL");
         return loginResponseDTO;

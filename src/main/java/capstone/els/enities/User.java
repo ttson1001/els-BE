@@ -23,7 +23,6 @@ public class User {
     private String email;
 
     private String password;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Role role;
 }
